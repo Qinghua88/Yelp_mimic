@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Camping places</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel='stylesheet' href='/stylesheets/homepage.css'>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js' type='text/javascript' async></script>
+</head>
+<body>
+<% if (error && error.length > 0) { %>
+	<div class='container'>
+		<div class='alert alert-danger'>
+			<%= error %>
+		</div>
+	</div>
+	<% } %>
+	<% if (success && success.length > 0) { %>
+	<div class='container'>
+		<div class='alert alert-success'>
+			<%= success %>
+		</div>
+	</div>
+<% } %>
+
+<div id='homeHeader'>
+	<h1>
+		Welcome to CAMPS!
+	</h1>
+	<a href='/camps' class='btn btn-success btn-lg'>View all campgrounds</a>
+</div>
+
+<ul class='slideshow'>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+	
+<%- include("partials/footer") %>
