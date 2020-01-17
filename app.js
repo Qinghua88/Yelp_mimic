@@ -16,7 +16,8 @@ var express = require("express"),
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
-mongoose.connect("mongodb://localhost/campsdb", {useUnifiedTopology: true, useNewUrlParser: true })
+// mongoose.connect("mongodb://localhost/campsdb", {useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect("mongodb+srv://qinghua:mongo@yelp-tklwa.mongodb.net/test?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true })
 mongoose.set('useFindAndModify', false);
 app.use(express.static(__dirname + '/public'));
 app.use(flash());
