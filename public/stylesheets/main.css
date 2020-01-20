@@ -1,3 +1,6 @@
+#navbar {
+	background-color: #c8e6c9;
+}
 .thumbnail img {
 	width: 100%;
 }
@@ -10,4 +13,21 @@
 
 .deleteBtn {
 	display: inline;
+}
+
+#camps-index {
+	display: flex;
+	flex-wrap: wrap;
+	padding-left: 5%;
+	padding-right: 5%;
+}
+#map {
+	height: 400px;
+	width: 100%;
+}
+.authen-head {
+	text-align: center;
+}
+.authen-form {
+	margin: 25px auto;
 }

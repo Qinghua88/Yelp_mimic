@@ -2,16 +2,59 @@
 <html>
 <head>
 	<title>Camping places</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<!-- Make site responsive on mobile/tablet -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 	<link rel='stylesheet' href='/stylesheets/main.css'>
 </head>
 <body>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-light navbar-expand-md mb-4" id='navbar'>
+
+	  <!-- Navbar brand -->
+		<a class="navbar-brand" href="/camps">CAMPS</a>
+		<form action='/camps' method='GET' class="form-inline my-2 my-lg-0">
+			<input type='text' placeholder='search a campground ...' name='search' class='form-control mr-sm-2'>
+			<input type='submit' value='search' class='btn btn-outline-success my-2 my-sm-0'>
+		</form>
+	  <!-- Collapse button -->
+		<button class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+	  <!-- Collapsible content -->
+		<div class="collapse navbar-collapse" id="navbar">
+
+			<!-- Links -->
+			<ul class="navbar-nav  ml-auto">
+				<% if (!currentUser) { %>
+					<li class="nav-item"><a class="nav-link" href='/login'>Login</a></li>
+					<li class="nav-item"><a class="nav-link" href='/register'>Sign Up</a></li>
+				<% } else { %>
+
+					<li class="nav-item"><a class="nav-link" href='#'>Welcome! <%= currentUser.username%></a></li>
+					<li class="nav-item"><a class="nav-link" href='/logout'>Logout</a></li>
+				<% } %>
+			</ul>
+			<!-- Links -->
+
+		</div>
+	  <!-- Collapsible content -->
+
+	</nav>
+	<!--/.Navbar-->
+	<!-- <nav class="navbar navbar-default">
 		<div class='container-fluid'>
 			<div class='navbar-header'>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
 				<a class='navbar-brand'>Camps</a>
 			</div>
-			<div class='collapse navbar-collapse'>
+			<div class='collapse navbar-collapse' id='navbar'>
 				<ul class='nav navbar-nav navbar-right'>
 					<% if (!currentUser) { %>
 						<li><a href='/login'>Login</a></li>
@@ -26,7 +69,7 @@
 				</ul>
 			</div>
 		</div>
-	</nav>
+	</nav> -->
 	<% if (error && error.length > 0) { %>
 	<div class='container'>
 		<div class='alert alert-danger'>

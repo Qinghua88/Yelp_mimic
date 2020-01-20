@@ -2,17 +2,39 @@ var express = require('express');
 var router = express.Router();
 var CAMPS = require('../models/camps');
 var middleware = require('../middleware');
+var NodeGeocoder = require('node-geocoder');
+ 
+var options = {
+  provider: 'google',
+  httpAdapter: 'https',
+  apiKey: process.env.GGAPIKEY,
+  formatter: null
+};
+ 
+var geocoder = NodeGeocoder(options);
 
 router.get('/camps', (req, res) => {
-	CAMPS.find({}, (err, camps) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.render("camps/index", {camps: camps});
-		}
-	});
-	
+	if (req.query.search) {
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		CAMPS.find({name: regex}, (err, camps) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.render("camps/index", {camps: camps});
+			}
+		});
+	} else {
+		CAMPS.find({}, (err, camps) => {
+			if (err) {
+				console.log(err);
+			} else {
+				res.render("camps/index", {camps: camps});
+			}
+		});
+	}
 });
+
+//CREATE - add new campground to DB
 
 router.post('/camps', middleware.isLoggedIn, (req, res) => {
 	var campName =  req.body.campName;
@@ -23,16 +45,27 @@ router.post('/camps', middleware.isLoggedIn, (req, res) => {
 		userId: req.user._id,
 		username: req.user.username
 	};
-	var newCreated = {name: campName, price: price, imageURL: imageURL, descr: descr, author:author};
-	CAMPS.create(newCreated, (err, newcamp) => {
-		if (err) {
+	geocoder.geocode(req.body.location, (err, data) => {
+		if (err || !data.length) {
 			console.log(err);
-		} else {
-			req.flash('success', 'Successfully post a camp');
-			res.redirect('/camps');
-		}
+			req.flash('error', 'Invalid address');
+			return res.redirect('back');
+    	}
+		var lat = data[0].latitude;
+		var lng = data[0].longitude;
+		var location = data[0].formattedAddress;
+		var newCreated = {name: campName, price: price, imageURL: imageURL, descr: descr, author:author, location: location, lat: lat, lng: lng};
+		CAMPS.create(newCreated, (err, newcamp) => {
+			if (err) {
+				console.log(err);
+			} else {
+				newcamp.createdAt = newcamp.createdAt;
+				newcamp.save();
+				req.flash('success', 'Successfully post a camp');
+				res.redirect('/camps');
+			}
+		});
 	});
-	
 });
 
 router.get('/camps/new', middleware.isLoggedIn, (req, res) => {
@@ -63,14 +96,24 @@ router.get('/camps/:id/edit', middleware.isCampOwner, (req, res) => {
 
 // update camp
 router.put('/camps/:id', middleware.isCampOwner, (req, res) =>{
-	CAMPS.findByIdAndUpdate(req.params.id, req.body.camp, (err, camp) =>{
-		if (err) {
-			res.redirect('/camps');
-		} else {
-			req.flash('success', 'Successfully edit your post');
-			res.redirect('/camps/' + req.params.id);
-		}
+	geocoder.geocode(req.body.location, (err, data) => {
+		if (err || !data.length) {
+			req.flash('error', 'Invalid address');
+			return res.redirect('back');
+    	}
+		req.body.camp.lat = data[0].latitude;
+		req.body.camp.lng = data[0].longitude;
+		req.body.camp.location = data[0].formattedAddress;
+		CAMPS.findByIdAndUpdate(req.params.id, req.body.camp, (err, camp) =>{
+			if (err) {
+				res.redirect('/camps');
+			} else {
+				req.flash('success', 'Successfully edit your post');
+				res.redirect('/camps/' + req.params.id);
+			}
+		});
 	});
+	
 });
 
 // delete camp
@@ -85,5 +128,8 @@ router.delete('/camps/:id', middleware.isCampOwner, (req, res) => {
 	});
 });
 
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;

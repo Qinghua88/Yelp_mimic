@@ -25,6 +25,7 @@ router.post('/camps/:id/comments', middleware.isLoggedIn, (req, res) => {
 			Comment.create(req.body.comment, (err, comment) => {
 				comment.author.userId = req.user._id;
 				comment.author.username = req.user.username;
+				comment.createdAt = comment.createdAt;
 				comment.save();
 				camp.comments.push(comment);
 				camp.save();

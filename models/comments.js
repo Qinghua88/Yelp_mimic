@@ -8,6 +8,7 @@ var commentSchema = new mongoose.Schema({
 			ref: "User"
 		}
 	},
+	createdAt: {type: Date, default: Date.now },
 	text: String
 });
 

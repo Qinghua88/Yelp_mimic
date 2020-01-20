@@ -5,6 +5,10 @@ var campSchema = new mongoose.Schema({
 	imageURL: String,
 	descr: String,
 	price: String,
+	lat: Number,
+	lng: Number,
+	location: String,
+	createdAt: {type: Date, default: Date.now },
 	author: {
 		username: String,
 		userId:	{

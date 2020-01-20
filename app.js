@@ -12,12 +12,12 @@ var express = require("express"),
 	indexRoutes = require('./routes/index'),
 	methodOverride = require('method-override'),
 	flash = require('connect-flash'),
+	moment = require('moment'),
 	seedsDB = require("./seeds");
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
-console.log(process.env.DBURL);
 mongoose.connect(process.env.DBURL, {useUnifiedTopology: true, useNewUrlParser: true })
 mongoose.set('useFindAndModify', false);
 app.use(express.static(__dirname + '/public'));
@@ -36,6 +36,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.locals.moment = moment;
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
 	res.locals.error = req.flash('error');

@@ -40,19 +40,19 @@ body {
 	background-image: url(https://blog.eurail.com/wp-content/uploads/2016/06/matterhorn.jpg);
 }
 .slideshow li:nth-child(2) {
-	background-image: url(https://static.tripzilla.com/thumb/2/8/92200_800x.jpg);
+	background-image: url(https://images.unsplash.com/photo-1500622944204-b135684e99fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2002&q=80);
 	animation-delay: 10s;
 }
 .slideshow li:nth-child(3) {
-	background-image: url(https://i.ytimg.com/vi/DWkDBlEyz7U/maxresdefault.jpg);
+	background-image: url(https://webneel.com/wallpaper/sites/default/files/images/08-2018/3-nature-wallpaper-mountain.1440.jpg);
 	animation-delay: 20s;
 }
 .slideshow li:nth-child(4) {
-	background-image: url(http://creativeoverflow.net/wp-content/uploads/2019/01/nature-photos.jpg);
+	background-image: url(http://www.youandthemat.com/wp-content/uploads/nature-2-26-17.jpg);
 	animation-delay: 30s;
 }
 .slideshow li:nth-child(5) {
-	background-image: url(https://st4.depositphotos.com/17412252/20595/i/1600/depositphotos_205956878-stock-photo-horse-background-beautiful-nature-mountains.jpg);
+	background-image: url(https://webneel.com/daily/sites/default/files/images/daily/10-2013/11-nature-photography-green.jpg);
 	animation-delay: 40s;
 }
 
