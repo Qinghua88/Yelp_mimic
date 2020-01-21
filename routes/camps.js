@@ -12,6 +12,7 @@ var options = {
 };
  
 var geocoder = NodeGeocoder(options);
+var GGAPIURL = "https://maps.googleapis.com/maps/api/js?key=" + process.env.GGAPIKEY + "&callback=initMap";
 
 router.get('/camps', (req, res) => {
 	if (req.query.search) {
@@ -78,7 +79,7 @@ router.get('/camps/:id', (req, res) => {
 		if (err) {
 			console.log(err);
 		} else {
-			res.render('camps/show', {camp: camp});
+			res.render('camps/show', {camp: camp, GGAPIURL: GGAPIURL});
 		}
 	});
 });
