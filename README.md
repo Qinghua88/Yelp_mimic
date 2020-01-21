@@ -22,5 +22,5 @@ The following skills are used to build this website:
 •	GoormIDE
 •	Heroku
 
-I deployed this app on Heroku. Here is the URL: https://frozen-plains-82785.herokuapp.com/
+I deployed this website on Heroku. Here is the link: https://frozen-plains-82785.herokuapp.com/
 Please check it out!
